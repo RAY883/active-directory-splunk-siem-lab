@@ -24,7 +24,7 @@ The screenshots below follow the order in which the environment was prepared and
 I created two virtual machines in Oracle VirtualBox: one Windows Server 2022 machine and one Windows 11 client. After the main setup and testing were completed, I saved clean baseline snapshots for both machines.
 
 <p align="center">
-  <img src="evidence/01-virtualbox-lab-environment.png" alt="VirtualBox lab showing Windows Server 2022, Windows 11 and clean baseline snapshots" width="100%">
+  <img src="01-virtualbox-lab-environment.png" alt="VirtualBox lab showing Windows Server 2022, Windows 11 and clean baseline snapshots" width="100%">
 </p>
 
 **Result:** The completed lab was preserved at a stable recovery point. The snapshots allow me to return the machines to a known working state before future security tests.
@@ -38,7 +38,7 @@ I created two virtual machines in Oracle VirtualBox: one Windows Server 2022 mac
 I configured Active Directory Domain Services and created the fictional `securecorp.local` domain. I also organized the environment with units for IT, HR, Finance, Sales, Servers, Users, and Workstations.
 
 <p align="center">
-  <img src="evidence/02-active-directory-domain.png" alt="Active Directory Users and Computers showing the securecorp.local domain structure" width="100%">
+  <img src="02-active-directory-domain.png" alt="Active Directory Users and Computers showing the securecorp.local domain structure" width="100%">
 </p>
 
 **Result:** The lab had a central system for managing users, computers, departments, and domain resources.
@@ -52,7 +52,7 @@ I configured Active Directory Domain Services and created the fictional `securec
 Before the Windows endpoint could send its events, I configured Splunk Enterprise to listen for Universal Forwarder traffic on TCP port `9997`.
 
 <p align="center">
-  <img src="evidence/03-splunk-receiving-port-9997.png" alt="Splunk Enterprise receiving port 9997 enabled" width="100%">
+  <img src="03-splunk-receiving-port-9997.png" alt="Splunk Enterprise receiving port 9997 enabled" width="100%">
 </p>
 
 **Result:** Splunk was ready to receive forwarded data from the endpoint.
@@ -66,7 +66,7 @@ Before the Windows endpoint could send its events, I configured Splunk Enterpris
 I checked the Windows Services console to confirm that the `SplunkForwarder` service was active. The service was shown as **Running**, and its startup type was set to **Automatic**.
 
 <p align="center">
-  <img src="evidence/04-universal-forwarder-running.png" alt="Windows Services showing the Splunk Universal Forwarder running automatically" width="100%">
+  <img src="04-universal-forwarder-running.png" alt="Windows Services showing the Splunk Universal Forwarder running automatically" width="100%">
 </p>
 
 **Result:** The endpoint collection service was operating and configured to start again after a restart.
@@ -80,7 +80,7 @@ I checked the Windows Services console to confirm that the `SplunkForwarder` ser
 I reviewed the Universal Forwarder `outputs.conf` file. It directed the Windows endpoint to send its events to the Splunk receiver at the private lab address `10.0.2.2:9997`.
 
 <p align="center">
-  <img src="evidence/05-forwarder-output-configuration.png" alt="Splunk Universal Forwarder outputs.conf configuration" width="100%">
+  <img src="05-forwarder-output-configuration.png" alt="Splunk Universal Forwarder outputs.conf configuration" width="100%">
 </p>
 
 **Result:** The endpoint destination matched the receiving port configured in Splunk.
@@ -96,7 +96,7 @@ I reviewed the Universal Forwarder `outputs.conf` file. It directed the Windows 
 I used the Splunk search `index=* sourcetype="WinEventLog:*"` to check whether the Windows events had travelled through the complete collection path. The search returned **16,884 events** from `Faraday.securecorp.local`.
 
 <p align="center">
-  <img src="evidence/06-splunk-event-search-results.png" alt="Splunk search returning 16,884 Windows events" width="100%">
+  <img src="06-splunk-event-search-results.png" alt="Splunk search returning 16,884 Windows events" width="100%">
 </p>
 
 **Result:** Windows System and Application events reached Splunk and became searchable.
@@ -110,7 +110,7 @@ I used the Splunk search `index=* sourcetype="WinEventLog:*"` to check whether t
 After confirming the total event count, I examined individual records. The evidence shows useful fields such as the event time, log name, event code, computer name, source, and sourcetype.
 
 <p align="center">
-  <img src="evidence/07-detailed-windows-events.png" alt="Detailed Windows Application and System events indexed in Splunk" width="100%">
+  <img src="07-detailed-windows-events.png" alt="Detailed Windows Application and System events indexed in Splunk" width="100%">
 </p>
 
 **Result:** Splunk stored detailed event information that an analyst could open, compare, and use during an investigation.
